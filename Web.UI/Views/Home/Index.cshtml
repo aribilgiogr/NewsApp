@@ -1,0 +1,44 @@
+﻿@model Web.UI.Models.HomeIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+<div>
+    <ul id="category-menu" class="icons">
+        @foreach (var category in Model.Categories)
+        {
+            <li>
+                <a href="#@category.Slug">@category.Name</a>
+            </li>
+        }
+    </ul>
+</div>
+
+<!-- Section -->
+<section>
+    <div class="posts">
+        @foreach (var article in Model.LatestArticles.Take(6))
+        {
+            <article>
+                <a href="#@article.Slug" class="image"><img src="@article.CoverImage" alt="@article.Title" /></a>
+                <h5>
+                    <a href="#@article.CategoryInfo.Slug">
+                        @article.CategoryInfo.Name
+                    </a>
+                </h5>
+                <h3>@article.Title</h3>
+                <p>@article.SubTitle</p>
+                <div class="my-2">
+                    @foreach (var tag in article.Tags)
+                    {
+                        <a href="#@tag" class="tag fs-6">@tag</a> 
+                    }
+                </div>
+                <ul class="actions">
+                    <li><a href="#@article.Slug" class="button">More</a></li>
+                </ul>
+            </article>
+        }
+    </div>
+</section>
+
