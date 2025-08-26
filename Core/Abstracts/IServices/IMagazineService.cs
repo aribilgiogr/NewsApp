@@ -6,8 +6,8 @@ namespace Core.Abstracts.IServices
 {
     public interface IMagazineService
     {
-        Task<IEnumerable<ArticlesListItem>> GetArticlesAsync(string categorySlug = null);
-        Task<ArticleDetail> GetArticleAsync(string articleSlug);
+        Task<IEnumerable<ArticlesListItem>> GetArticlesAsync(int? categoryId = null);
+        Task<ArticleDetail> GetArticleAsync(int articleId);
         Task<IEnumerable<CategoryMenuItem>> GetCategories();
     }
 

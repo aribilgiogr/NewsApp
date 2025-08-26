@@ -13,6 +13,10 @@ namespace Web.UI
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapRoute("category_filter", "{slug}-c-{id}", new { controller = "home", action = "byCategory" });
+
+            routes.MapRoute("article_detail", "{slug}-a-{id}", new { controller = "home", action = "articleDetail" });
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
