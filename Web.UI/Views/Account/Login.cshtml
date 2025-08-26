@@ -1,0 +1,37 @@
+﻿@model Web.UI.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <h4>Giriş Formu</h4>
+    <hr />
+
+    @Html.ValidationSummary(true, "")
+
+    <!-- Username Input -->
+    @Html.LabelFor(model => model.Username)
+    @Html.EditorFor(model => model.Username)
+    @Html.ValidationMessageFor(model => model.Username, "")
+
+    <!-- Password Input -->
+    @Html.LabelFor(model => model.Password)
+    @Html.EditorFor(model => model.Password)
+    @Html.ValidationMessageFor(model => model.Password, "")
+
+    <!-- Remember Me Check -->
+    <input type="checkbox" id="RememberMe" name="RememberMe" />
+    @Html.LabelFor(model => model.RememberMe)
+    @Html.ValidationMessageFor(model => model.RememberMe, "")
+
+    <ul class="actions">
+        <li><input type="submit" value="GİRİŞ YAP" class="primary"></li>
+        <li><input type="reset" value="Reset"></li>
+    </ul>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

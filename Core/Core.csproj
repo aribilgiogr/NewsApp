@@ -63,11 +63,14 @@
     <Compile Include="Abstracts\IRepositories\IMemberRepository.cs" />
     <Compile Include="Abstracts\IRepositories\ISettingsRepository.cs" />
     <Compile Include="Abstracts\IRepositories\ITagRepository.cs" />
+    <Compile Include="Abstracts\IServices\IEditorialService.cs" />
     <Compile Include="Abstracts\IServices\IMagazineService.cs" />
+    <Compile Include="Abstracts\IServices\IMembershipService.cs" />
     <Compile Include="Abstracts\IUnitOfWork.cs" />
     <Compile Include="Concretes\DTOs\ArticleDetail.cs" />
     <Compile Include="Concretes\DTOs\ArticlesListItem.cs" />
     <Compile Include="Concretes\DTOs\CategoryMenuItem.cs" />
+    <Compile Include="Concretes\DTOs\MemberProfile.cs" />
     <Compile Include="Concretes\DTOs\NewArticle.cs" />
     <Compile Include="Concretes\DTOs\NewTag.cs" />
     <Compile Include="Concretes\Entities\Article.cs" />

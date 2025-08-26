@@ -10,17 +10,4 @@ namespace Core.Abstracts.IServices
         Task<ArticleDetail> GetArticleAsync(int articleId);
         Task<IEnumerable<CategoryMenuItem>> GetCategories();
     }
-
-    public interface IEditorialService
-    {
-        Task CreateArticleAsync(NewArticle newArticle);
-        Task DeleteToggleArticleAsync(string articleSlug);
-        Task PublishToggleArticleAsync(string articleSlug);
-        Task UpdateArticleAsync(EditArticle editArticle);
-    }
-
-    public interface IMembershipService
-    {
-
-    }
 }
