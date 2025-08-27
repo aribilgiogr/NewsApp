@@ -2,6 +2,7 @@
 using Core.Abstracts.IServices;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Utilities.Helpers;
 using Web.UI.Models;
 
 namespace Web.UI.Controllers
@@ -23,9 +24,12 @@ namespace Web.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            ViewBag.Response = ResponseHelper.Error("Zorunlu alanları doldurunuz!");
             if (ModelState.IsValid)
             {
-                if (await service.LoginAsync(model.Username, model.Password, model.RememberMe))
+                var response = await service.LoginAsync(model.Username, model.Password, model.RememberMe);
+                ViewBag.Response = response;
+                if (response.Status)
                 {
                     return Redirect(returnUrl ?? "/");
                 }
@@ -42,16 +46,22 @@ namespace Web.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model, string returnUrl)
         {
-            if (ModelState.IsValid && await service.RegisterAsync(model.Email, model.Username, model.Password))
+            ViewBag.Response = ResponseHelper.Error("Zorunlu alanları doldurunuz!");
+            if (ModelState.IsValid)
             {
-                return Redirect(returnUrl ?? "/");
+                var response = await service.RegisterAsync(model.Email, model.Username, model.Password);
+                ViewBag.Response = response;
+                if (response.Status)
+                {
+                    return Redirect(returnUrl ?? "/");
+                }
             }
             return View(model);
         }
 
-        public async Task<ActionResult> Logout(string returnUrl)
+        public ActionResult Logout(string returnUrl)
         {
-            await service.LogoutAsync();
+            service.Logout();
             return Redirect(returnUrl ?? "/");
         }
     }

@@ -3,11 +3,17 @@
 @{
     ViewBag.Title = "Login";
 }
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     <h4>Giriş Formu</h4>
     <hr />
+
+    if (ViewBag.Response != null)
+    {
+        <p>@ViewBag.Response.Message</p>
+    }
 
     @Html.ValidationSummary(true, "")
 

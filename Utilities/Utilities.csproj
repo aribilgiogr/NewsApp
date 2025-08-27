@@ -54,12 +54,11 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Generics\IRepository.cs" />
     <Compile Include="Generics\Repository.cs" />
+    <Compile Include="Helpers\ResponseHelper.cs" />
+    <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
