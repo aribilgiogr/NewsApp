@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Core.Concretes.DTOs.MembersListItem>
+@{
+    ViewBag.Title = "Index";
+    var username = User.Identity.Name;
+}
+
+<h2>Members</h2>
+<hr />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Ad Soyad</th>
+            <th>Kullanıcı Adı</th>
+            <th>Eposta Adresi</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item.Username != username)
+            {
+                <tr>
+                    <td>@item.Fullname</td>
+                    <td>@item.Username</td>
+                    <td>@item.Email</td>
+                    <td class="text-end">
+                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                    @item.Role
+                                </button>
+                                <ul class="dropdown-menu">
+                                    @foreach (var role in new string[] { "Member", "Admin", "Editor" })
+                                    {
+                                        if (item.Role != role)
+                                        {
+                                            <li><a class="dropdown-item" href="#">@role</a></li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                            @if (item.Locked)
+                            {
+                                <button type="button" class="btn btn-outline-danger">
+                                    <i class="fa-solid fa-lock"></i>
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-outline-success">
+                                    <i class="fa-solid fa-lock-open"></i>
+                                </button>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

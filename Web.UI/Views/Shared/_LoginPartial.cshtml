@@ -6,7 +6,16 @@
 <ul class="actions small">
     @if (User.Identity.IsAuthenticated)
     {
-        <li><a href="#" class="button small">@username</a></li>
+        string ctrl = "memberarea";
+        if (User.IsInRole("Admin"))
+        {
+            ctrl = "adminarea";
+        }
+        else if (User.IsInRole("Editor"))
+        {
+            ctrl = "editorarea";
+        }
+        <li><a href="@Url.Action("index", ctrl, new { area = "profile" })" class="button small">@username</a></li>
         <li><a href="@Url.Action("logout","account")" class="button primary small">Çıkış</a></li>
     }
     else

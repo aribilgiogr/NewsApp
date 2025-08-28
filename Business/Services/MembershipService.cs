@@ -7,7 +7,9 @@ using Data.Contexts;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Security;
 using Utilities.Helpers;
@@ -29,6 +31,19 @@ namespace Business.Services
             if (!roleManager.RoleExists("Member")) roleManager.Create(new IdentityRole("Member"));
             if (!roleManager.RoleExists("Admin")) roleManager.Create(new IdentityRole("Admin"));
             if (!roleManager.RoleExists("Editor")) roleManager.Create(new IdentityRole("Editor"));
+        }
+
+        public async Task<IEnumerable<MembersListItem>> GetMemberList(string role = null)
+        {
+            IEnumerable<Member> members = await unitOfWork.MemberRepository.FindManyAsync();
+            return members.Select(m => new MembersListItem
+            {
+                Username = m.User.UserName,
+                Email = m.User.Email,
+                Fullname = $"{m.FirstName} {m.MiddleName} {m.LastName}",
+                Role = userManager.GetRoles(m.UserId).FirstOrDefault(),
+                Locked = !(m.Active && !m.Deleted)
+            });
         }
 
         public Task<MemberProfile> GetProfile(string userId)

@@ -70,6 +70,7 @@
     <Compile Include="Concretes\DTOs\ArticleDetail.cs" />
     <Compile Include="Concretes\DTOs\ArticlesListItem.cs" />
     <Compile Include="Concretes\DTOs\CategoryMenuItem.cs" />
+    <Compile Include="Concretes\DTOs\MembersListItem.cs" />
     <Compile Include="Concretes\DTOs\MemberProfile.cs" />
     <Compile Include="Concretes\DTOs\NewArticle.cs" />
     <Compile Include="Concretes\DTOs\NewTag.cs" />
