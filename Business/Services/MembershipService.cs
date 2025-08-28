@@ -23,10 +23,8 @@ namespace Business.Services
 
         public MembershipService()
         {
-            var userStore = new UserStore<IdentityUser>(NewsContext.Instance);
-            userManager = new UserManager<IdentityUser>(userStore);
-            var roleStore = new RoleStore<IdentityRole>(NewsContext.Instance);
-            roleManager = new RoleManager<IdentityRole>(roleStore);
+            userManager = unitOfWork.AppUserManager;
+            roleManager = unitOfWork.AppRoleManager;
 
             if (!roleManager.RoleExists("Member")) roleManager.Create(new IdentityRole("Member"));
             if (!roleManager.RoleExists("Admin")) roleManager.Create(new IdentityRole("Admin"));

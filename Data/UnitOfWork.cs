@@ -2,6 +2,8 @@
 using Core.Abstracts.IRepositories;
 using Data.Contexts;
 using Data.Repositories;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Threading.Tasks;
 
@@ -10,6 +12,9 @@ namespace Data
     public class UnitOfWork : IUnitOfWork
     {
         private readonly NewsContext context = NewsContext.Instance;
+        public UserManager<IdentityUser> AppUserManager => new UserManager<IdentityUser>(new UserStore<IdentityUser>(context));
+        public RoleManager<IdentityRole> AppRoleManager => new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+
 
         //Prototype Design Pattern: Repository örneği varsa onu kullanır yoksa veya değişmişse yenisini oluşturur.
         private IArticleRepository articleRepository;

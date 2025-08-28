@@ -55,13 +55,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Middlewares\AuthMiddleware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MagazineService.cs" />
     <Compile Include="Services\MembershipService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Middlewares\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{80040fd5-02d9-4293-9fc8-d7fcf02cb12c}</Project>
