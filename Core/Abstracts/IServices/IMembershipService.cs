@@ -15,5 +15,7 @@ namespace Core.Abstracts.IServices
         Task<bool> UpdateProfile(MemberProfile profile);
 
         Task<IEnumerable<MembersListItem>> GetMemberList(string role = null);
+
+        Task<bool> ChangeRoleAsync(string role, string username);
     }
 }

@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Middlewares\AuthMiddleware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\EditorialService.cs" />
     <Compile Include="Services\MagazineService.cs" />
     <Compile Include="Services\MembershipService.cs" />
   </ItemGroup>

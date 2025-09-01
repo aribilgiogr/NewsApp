@@ -33,6 +33,18 @@ namespace Business.Services
             if (!roleManager.RoleExists("Editor")) roleManager.Create(new IdentityRole("Editor"));
         }
 
+        public async Task<bool> ChangeRoleAsync(string role, string username)
+        {
+            var user = await userManager.FindByNameAsync(username);
+            if (user != null)
+            {
+                await userManager.RemoveFromRolesAsync(user.Id, new string[] { "Admin", "Member", "Editor" });
+                var result = await userManager.AddToRoleAsync(user.Id, role);
+                return result.Succeeded;
+            }
+            return false;
+        }
+
         public async Task<IEnumerable<MembersListItem>> GetMemberList(string role = null)
         {
             IEnumerable<Member> members = await unitOfWork.MemberRepository.FindManyAsync();

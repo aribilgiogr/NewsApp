@@ -20,14 +20,14 @@
         {
             if (item.Username != username)
             {
-                <tr>
+                <tr data-user="@item.Username">
                     <td>@item.Fullname</td>
                     <td>@item.Username</td>
                     <td>@item.Email</td>
                     <td class="text-end">
                         <div class="btn-group" role="group" aria-label="Basic outlined example">
                             <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button type="button" class="btn btn-outline-primary dropdown-toggle role-dropdown-btn" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                     @item.Role
                                 </button>
@@ -36,7 +36,7 @@
                                     {
                                         if (item.Role != role)
                                         {
-                                            <li><a class="dropdown-item" href="#">@role</a></li>
+                                            <li><a class="dropdown-item confirm-role-change" href="#" data-role="@role">@role</a></li>
                                         }
                                     }
                                 </ul>
@@ -60,3 +60,39 @@
         }
     </tbody>
 </table>
+
+@section Scripts {
+    @*Bu aralığa yazdığım içerik veya kodu belirtilen üst (layout vs) şablona/sayfaya aktarır.*@
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const confirmLinks = document.querySelectorAll(".confirm-role-change")
+
+            confirmLinks.forEach(link => {
+                link.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    if (!confirm('Emin misiniz?')) return;
+
+                    const row = link.closest("tr")
+                    const username = row.getAttribute("data-user")
+                    const dropdownBtn = row.querySelector(".role-dropdown-btn")
+
+                    const role = link.getAttribute("data-role")
+
+                    fetch("@Url.Action("changerole","adminarea",new { area="profile" })", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ role: role, username: username })
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                dropdownBtn.textContent = role
+                            }
+                            alert(data.message)
+                        })
+                        .catch(err => console.error("Role değiştirme hatası:", err))
+                })
+            })
+        })
+    </script>
+}

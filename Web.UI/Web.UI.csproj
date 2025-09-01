@@ -189,6 +189,7 @@
     <Content Include="Areas\Profile\Views\EditorArea\Index.cshtml" />
     <Content Include="Areas\Profile\Views\MemberArea\Index.cshtml" />
     <Content Include="Areas\Profile\Views\Shared\_adminNav.cshtml" />
+    <Content Include="Areas\Profile\Views\EditorArea\Create.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -209,6 +210,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Profile\Data\" />
+    <Folder Include="content\uploads\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj">
