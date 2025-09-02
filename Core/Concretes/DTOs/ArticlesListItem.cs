@@ -13,4 +13,14 @@ namespace Core.Concretes.DTOs
         public CategoryMenuItem CategoryInfo { get; set; }
         public IEnumerable<string> Tags { get; set; } = new HashSet<string>();
     }
+
+    public class ArticleEditorialItem
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public CategoryListItem CategoryInfo { get; set; }
+        public DateTime? PublishDate { get; set; }
+        public bool Draft { get; set; }
+        public bool Deleted { get; set; }
+    }
 }

@@ -17,13 +17,18 @@ namespace Web.UI.Areas.Profile.Controllers
     {
         private readonly IEditorialService service = new EditorialService();
         // GET: Profile/EditorArea
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            var articles = await service.GetArticlesAsync();
+            return View(articles);
         }
 
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
+            var categories = await service.GetCategoriesAsync();
+            // ViewBag.Categories = categories.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() });
+            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+
             return View();
         }
 
@@ -31,6 +36,9 @@ namespace Web.UI.Areas.Profile.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(NewArticle newArticle, HttpPostedFileBase CoverImage)
         {
+            var categories = await service.GetCategoriesAsync();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name", newArticle.CategoryId);
+
             if (!ModelState.IsValid || CoverImage == null || CoverImage.ContentLength == 0)
                 return View(newArticle);
 

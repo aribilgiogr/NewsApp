@@ -186,10 +186,10 @@
     <Content Include="Areas\Profile\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Profile\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Profile\Views\AdminArea\Index.cshtml" />
-    <Content Include="Areas\Profile\Views\EditorArea\Index.cshtml" />
     <Content Include="Areas\Profile\Views\MemberArea\Index.cshtml" />
     <Content Include="Areas\Profile\Views\Shared\_adminNav.cshtml" />
     <Content Include="Areas\Profile\Views\EditorArea\Create.cshtml" />
+    <Content Include="Areas\Profile\Views\EditorArea\Index.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

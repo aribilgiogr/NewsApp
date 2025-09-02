@@ -6,7 +6,8 @@ namespace Core.Abstracts.IServices
 {
     public interface IEditorialService
     {
-        Task<IEnumerable<ArticlesListItem>> GetArticlesAsync();
+        Task<IEnumerable<ArticleEditorialItem>> GetArticlesAsync();
+        Task<IEnumerable<CategoryListItem>> GetCategoriesAsync();
         Task CreateArticleAsync(NewArticle newArticle);
         Task DeleteToggleArticleAsync(string articleSlug);
         Task PublishToggleArticleAsync(string articleSlug);

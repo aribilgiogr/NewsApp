@@ -19,11 +19,11 @@ namespace Business.Services
         {
             var article = new Article
             {
-               Title = newArticle.Title,
-               SubTitle = newArticle.SubTitle,
-               HtmlContent = newArticle.HtmlContent,
-               CoverImage = newArticle.CoverImage,
-               CategoryId = newArticle.CategoryId
+                Title = newArticle.Title,
+                SubTitle = newArticle.SubTitle,
+                HtmlContent = newArticle.HtmlContent,
+                CoverImage = newArticle.CoverImage,
+                CategoryId = newArticle.CategoryId
             };
             await unitOfWork.ArticleRepository.InsertOneAsync(article);
             await unitOfWork.CommitAsync();
@@ -34,9 +34,30 @@ namespace Business.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ArticlesListItem>> GetArticlesAsync()
+        public async Task<IEnumerable<ArticleEditorialItem>> GetArticlesAsync()
         {
-            throw new NotImplementedException();
+            var articles = await unitOfWork.ArticleRepository.FindManyAsync();
+            return from a in articles
+                   select new ArticleEditorialItem
+                   {
+                       Id = a.Id,
+                       Title = a.Title,
+                       Deleted = a.Deleted,
+                       Draft = a.Draft,
+                       PublishDate = a.PublishDate,
+                       CategoryInfo = new CategoryListItem { Id = a.CategoryId, Name = a.Category.Name }
+                   };
+        }
+
+        public async Task<IEnumerable<CategoryListItem>> GetCategoriesAsync()
+        {
+            var categories = await unitOfWork.CategoryRepository.FindManyAsync();
+            return from c in categories
+                   select new CategoryListItem
+                   {
+                       Id = c.Id,
+                       Name = c.Name
+                   };
         }
 
         public Task PublishToggleArticleAsync(string articleSlug)
