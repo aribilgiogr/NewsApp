@@ -190,6 +190,7 @@
     <Content Include="Areas\Profile\Views\Shared\_adminNav.cshtml" />
     <Content Include="Areas\Profile\Views\EditorArea\Create.cshtml" />
     <Content Include="Areas\Profile\Views\EditorArea\Index.cshtml" />
+    <Content Include="Areas\Profile\Views\EditorArea\Detail.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

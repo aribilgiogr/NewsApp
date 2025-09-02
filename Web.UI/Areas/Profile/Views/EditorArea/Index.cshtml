@@ -25,7 +25,7 @@
                 <td>@item.Title</td>
                 <td>@item.CategoryInfo.Name</td>
                 <td>@(item.PublishDate!=null?((DateTime)item.PublishDate).ToLongDateString():"")</td>
-                <td>
+                <td class="text-end">
                     <div class="btn-group" role="group" aria-label="Basic outlined example">
                         @if (item.Draft)
                         {
@@ -51,6 +51,9 @@
                                 <i class="fa-solid fa-trash-can"></i>
                             </button>
                         }
+                        <a href="@Url.Action("detail","editorarea",new {area="profile",id=item.Id})" class="btn btn-outline-secondary" title="Makale Detayına Git">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
                     </div>
                 </td>
             </tr>
@@ -75,7 +78,25 @@
             //Toggle Draft Function
             const row = btn.closest("tr")
             const id = row.getAttribute("data-article-id")
-            console.log("Toggle Draft for Article ID:", id)
+            fetch(`@Url.Action("ToggleDraft","editorarea",new {area="profile"})?articleId=${id}`, { method: "POST" })
+                .then(res => res.text())
+                .then(text => {
+                    const icon = btn.querySelector('i')
+                    if (text === "True") {
+                        btn.classList.remove("btn-outline-success");
+                        btn.classList.add("btn-outline-danger");
+                        btn.setAttribute("title", "Yayınla")
+                        icon.classList.remove("fa-solid", "fa-upload")
+                        icon.classList.add("fa-brands", "fa-firstdraft")
+                    } else if (text === "False") {
+                        btn.classList.add("btn-outline-success");
+                        btn.classList.remove("btn-outline-danger");
+                        btn.setAttribute("title", "Taslak Haline Getir")
+                        icon.classList.add("fa-solid", "fa-upload")
+                        icon.classList.remove("fa-brands", "fa-firstdraft")
+                    }
+                })
+                .catch(err=>console.error("Toggle Draft Error:", err))
         }))
 
         const delete_buttons = document.querySelectorAll(".delete-btn")
@@ -84,7 +105,25 @@
             //Toggle Delete Function
             const row = btn.closest("tr")
             const id = row.getAttribute("data-article-id")
-            console.log("Toggle Delete for Article ID:", id)
+            fetch(`@Url.Action("ToggleDelete","editorarea",new {area="profile"})?articleId=${id}`, { method: "POST" })
+                .then(res => res.text())
+                .then(text => {
+                    const icon = btn.querySelector('i')
+                    if (text === "True") {
+                        btn.classList.remove("btn-outline-success");
+                        btn.classList.add("btn-outline-danger");
+                        btn.setAttribute("title", "Geri Getir")
+                        icon.classList.remove("fa-trash-can")
+                        icon.classList.add("fa-recycle")
+                    } else if (text === "False") {
+                        btn.classList.add("btn-outline-success");
+                        btn.classList.remove("btn-outline-danger");
+                        btn.setAttribute("title", "Kaldır")
+                        icon.classList.add("fa-trash-can")
+                        icon.classList.remove("fa-recycle")
+                    }
+                })
+                .catch(err=>console.error("Toggle Delete Error:", err))
         }))
     </script>
 }

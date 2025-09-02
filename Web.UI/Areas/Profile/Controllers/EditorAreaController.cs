@@ -54,5 +54,39 @@ namespace Web.UI.Areas.Profile.Controllers
             }
             return View(newArticle);
         }
+
+        [HttpPost]
+        public async Task<bool?> ToggleDraft(int articleId)
+        {
+            return await service.PublishToggleArticleAsync(articleId);
+        }
+
+        [HttpPost]
+        public async Task<bool?> ToggleDelete(int articleId)
+        {
+            return await service.DeleteToggleArticleAsync(articleId);
+        }
+
+        public async Task<ActionResult> Detail(int id)
+        {
+            var model = await service.GetArticleAsync(id);
+            if (model != null)
+            {
+                var categories = await service.GetCategoriesAsync();
+                ViewBag.Categories = new SelectList(categories, "Id", "Name", model.CategoryId);
+                return View(model);
+            }
+
+            return RedirectToAction("index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Detail(EditArticle model, HttpPostedFileBase CoverImage)
+        {
+            var categories = await service.GetCategoriesAsync();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name", model.CategoryId);
+            return View(model);
+        }
     }
 }

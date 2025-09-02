@@ -7,10 +7,11 @@ namespace Core.Abstracts.IServices
     public interface IEditorialService
     {
         Task<IEnumerable<ArticleEditorialItem>> GetArticlesAsync();
+        Task<EditArticle> GetArticleAsync(int id);
         Task<IEnumerable<CategoryListItem>> GetCategoriesAsync();
         Task CreateArticleAsync(NewArticle newArticle);
-        Task DeleteToggleArticleAsync(string articleSlug);
-        Task PublishToggleArticleAsync(string articleSlug);
+        Task<bool?> DeleteToggleArticleAsync(int articleId);
+        Task<bool?> PublishToggleArticleAsync(int articleId);
         Task UpdateArticleAsync(EditArticle editArticle);
     }
 }

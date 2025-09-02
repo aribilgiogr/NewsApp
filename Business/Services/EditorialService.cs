@@ -29,9 +29,38 @@ namespace Business.Services
             await unitOfWork.CommitAsync();
         }
 
-        public Task DeleteToggleArticleAsync(string articleSlug)
+        public async Task<bool?> DeleteToggleArticleAsync(int articleId)
         {
-            throw new NotImplementedException();
+            var article = await unitOfWork.ArticleRepository.FindByKeyAsync(articleId);
+            if (article != null)
+            {
+                article.Active = article.Deleted;
+                article.Deleted = !article.Deleted;
+                article.Draft = true;
+                article.PublishDate = null;
+                await unitOfWork.ArticleRepository.UpdateOneAsync(article);
+                await unitOfWork.CommitAsync();
+                return article.Deleted;
+            }
+            return null;
+        }
+
+        public async Task<EditArticle> GetArticleAsync(int id)
+        {
+            var article = await unitOfWork.ArticleRepository.FindByKeyAsync(id);
+            if (article != null)
+            {
+                return new EditArticle
+                {
+                    ArticleId = article.Id,
+                    CategoryId = article.CategoryId,
+                    CoverImage = article.CoverImage,
+                    HtmlContent = article.HtmlContent,
+                    SubTitle = article.SubTitle,
+                    Title = article.Title
+                };
+            }
+            return null;
         }
 
         public async Task<IEnumerable<ArticleEditorialItem>> GetArticlesAsync()
@@ -60,9 +89,19 @@ namespace Business.Services
                    };
         }
 
-        public Task PublishToggleArticleAsync(string articleSlug)
+        // ?: Nullable yani boş olabilir anlamına gelir.
+        public async Task<bool?> PublishToggleArticleAsync(int articleId)
         {
-            throw new NotImplementedException();
+            var article = await unitOfWork.ArticleRepository.FindByKeyAsync(articleId);
+            if (article != null)
+            {
+                article.Draft = !article.Draft;
+                article.PublishDate = !article.Draft ? (DateTime?)DateTime.Now : null;
+                await unitOfWork.ArticleRepository.UpdateOneAsync(article);
+                await unitOfWork.CommitAsync();
+                return article.Draft;
+            }
+            return null;
         }
 
         public Task UpdateArticleAsync(EditArticle editArticle)
